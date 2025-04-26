@@ -35,7 +35,7 @@ export default function RootLayout({
                   Shop
                 </Link>
                 <Link href="#" className="hover:text-accent">
-                  Exhibitions
+                  Algorithm-Addiction
                 </Link>
                 <Link href="/about" className="hover:text-accent">
                   About

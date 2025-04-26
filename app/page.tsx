@@ -1,25 +1,33 @@
 import { Upload, ImageIcon } from "lucide-react"
+import Image from "next/image"
 
 export default function Home() {
   return (
     <div className="flex flex-col gap-16">
-      <section className="bg-gradient-to-r from-gray-100 to-gray-200 py-20 px-4 text-center relative">
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fillRule='evenodd'%3E%3Cg fill='%23000000' fillOpacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
+      <section className="py-20 px-4 text-center relative">
+        {/* Use Next.js Image component directly instead of background */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <Image
+            src="/uploads/algorithm-sketch.png"
+            alt="Algorithm sketch background"
+            fill
+            priority
+            className="object-cover"
           />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto">
+
+        {/* Semi-transparent overlay to ensure content readability */}
+        <div className="absolute inset-0 bg-white opacity-30 z-0"></div>
+
+        <div className="relative z-10 max-w-4xl mx-auto p-8 rounded-xl bg-white/90 shadow-lg">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-4 text-black">Turn Your Algorithm into Art</h1>
           <div className="mb-8 space-y-4">
             <p className="text-lg md:text-xl max-w-2xl mx-auto text-black">
               Share your algorithm sketch and watch it transform through AI into a unique piece of art
             </p>
             <p className="text-base md:text-lg text-gray-700 max-w-2xl mx-auto">
-              We are interested in how people imagine the algorithms that control their social media, browsing, news, events and chats to look like in their lives
+              We concerned that algorithms are very addictive and are interested in how people imagine their algorithms
+              of social media, browsing, news, events and chats to look like in their lives
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 max-w-3xl mx-auto">
@@ -37,7 +45,7 @@ export default function Home() {
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-primary text-black px-8 py-3 rounded font-semibold hover:bg-primary/90 transition flex items-center justify-center">
+            <button className="bg-primary text-white px-8 py-3 rounded font-semibold hover:bg-primary/90 transition flex items-center justify-center">
               <Upload className="w-5 h-5 mr-2" />
               Upload Sketch
             </button>
@@ -59,14 +67,21 @@ export default function Home() {
           {featuredAlgorithms.map((algorithm, index) => (
             <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="aspect-square relative bg-gray-100">
-                <div className="absolute inset-0 grid grid-cols-2">
-                  <div className="border-r border-gray-200 p-2">
-                    <div className="w-full h-full bg-gray-200 rounded" />
-                  </div>
-                  <div className="p-2">
-                    <div className="w-full h-full bg-gray-300 rounded" />
-                  </div>
-                </div>
+                <Image
+                  src={
+                    index === 0
+                      ? "/algorithm-surveillance.png"
+                      : index === 2
+                        ? "/algorithm-mirror.png"
+                        : index === 3
+                          ? "/algorithm-thoughts.png"
+                          : "/algorithm-bubble.png"
+                  }
+                  alt={algorithm.title}
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                />
               </div>
               <div className="p-4">
                 <h3 className="font-bold text-lg mb-1">{algorithm.title}</h3>
@@ -78,13 +93,38 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-gray-50 py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-2xl font-bold mb-8 text-center">Wear Your Algorithm</h2>
+      <section className="py-16 px-4 relative">
+        <div className="absolute inset-0 overflow-hidden">
+          <Image
+            src="/uploads/algorithm-sketch.png"
+            alt="Algorithm sketch background"
+            fill
+            className="object-cover opacity-15"
+          />
+        </div>
+        <div className="absolute inset-0 bg-black bg-opacity-30"></div>
+        <div className="relative z-10 max-w-7xl mx-auto">
+          <h2 className="text-2xl font-bold mb-8 text-center text-white">Wear Your Algorithm</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {merchandise.map((item, index) => (
               <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
-                <div className="aspect-video relative bg-gray-200" />
+                <div className="aspect-video relative bg-gray-200">
+                  <Image
+                    src={
+                      index === 0
+                        ? "/algorithm-vision-mug.png"
+                        : index === 1
+                          ? "/algorithm-vision-tshirt.png"
+                          : index === 2
+                            ? "/algorithm-vision-poster.png"
+                            : item.image || "/placeholder.svg"
+                    }
+                    alt={item.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                  />
+                </div>
                 <div className="p-4">
                   <h3 className="font-bold text-lg">{item.name}</h3>
                   <p className="text-accent font-semibold">{item.price}</p>
@@ -114,8 +154,8 @@ export default function Home() {
               <h3 className="font-bold text-xl mb-2">{exhibition.title}</h3>
               <p className="text-gray-600 mb-4">{exhibition.description}</p>
               <div className="text-sm text-gray-500">
-                <p>{exhibition.location}</p>
-                <p>{exhibition.dates}</p>
+                <p>coming soon</p>
+                <p>date coming soon</p>
               </div>
             </div>
           ))}
@@ -130,28 +170,32 @@ const featuredAlgorithms = [
     title: "Sorting Visualization",
     description: "A bubble sort algorithm visualized through organic shapes",
     author: "Jenny K.",
+    image: "/abstract-sort-flow.png",
   },
   {
     title: "Neural Network Flow",
     description: "Mapping neural connections as flowing streams",
     author: "Mike R.",
+    image: "/abstract-neural-network.png",
   },
   {
     title: "Binary Tree Growth",
     description: "Binary tree operations represented as natural growth patterns",
     author: "Sarah L.",
+    image: "/binary-tree-fractal.png",
   },
   {
     title: "Recursive Patterns",
     description: "Recursion visualized through geometric fractals",
     author: "Alex M.",
+    image: "/infinite-triangles.png",
   },
 ]
 
 const merchandise = [
-  { name: "Mug", price: "£15" },
-  { name: "T-Shirt", price: "£25" },
-  { name: "Poster", price: "£20" },
+  { name: "Mug", price: "£15", image: "/algorithmic-abstract-mug.png" },
+  { name: "T-Shirt", price: "£25", image: "/algorithmic-flow.png" },
+  { name: "Poster", price: "£20", image: "/algorithmic-flow.png" },
 ]
 
 const exhibitions = [
